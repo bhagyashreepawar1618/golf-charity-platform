@@ -1,0 +1,16 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A subscription-based golf platform where users track scores, enter monthly draws, and win rewards.",
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "license": "ISC",
+  "author": "Bhagyashree Pawar",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
