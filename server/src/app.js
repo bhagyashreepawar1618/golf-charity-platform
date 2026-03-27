@@ -24,4 +24,8 @@ app.use(
 
 //to store images and files in public
 app.use(express.static('public'));
+
+import userRouter from './routes/user.routes.js';
+
+app.use('/api/v1/user', userRouter);
 export default app;
