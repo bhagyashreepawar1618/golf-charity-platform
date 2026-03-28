@@ -48,15 +48,10 @@ export default function Login() {
       if (role == "user") {
         localStorage.setItem("UseraccessToken", res.data.data.accessToken);
         localStorage.setItem("UserRefreshToken", res.data.data.refreshToken);
+        setUser(res.data.data.user);
       } else {
         localStorage.setItem("adminaccessToken", res.data.data.accessToken);
         localStorage.setItem("adminrefreshToken", res.data.data.refreshToken);
-      }
-
-      console.log("User info=", res.data.data.user.email);
-      if ((role = "user")) {
-        setUser(res.data.data.user);
-      } else {
         setAdmin(res.data.data.admin);
       }
 
