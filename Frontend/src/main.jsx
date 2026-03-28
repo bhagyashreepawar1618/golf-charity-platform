@@ -15,6 +15,9 @@ import AdminLayout from "./components/admin_components/AdminLayout.jsx";
 import AdminDashboard from "./components/admin_components/AdminDashboard.jsx";
 import AddScore from "./components/user_components/AddScore.jsx";
 import UpdateProfile from "./components/user_components/UpdateUserProfile.jsx";
+import Subscription from "./components/main_components/Subscription.jsx";
+import SelectCharity from "./components/main_components/CharitySelection.jsx";
+import AddCharity from "./components/admin_components/SetCharity.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "subscribe",
+        element: <Subscription />,
+      },
+      {
+        path: "charity",
+        element: <SelectCharity />,
       },
       {
         path: "profile",
@@ -52,6 +63,10 @@ const router = createBrowserRouter([
           {
             path: "admin-dashboard",
             element: <AdminDashboard />,
+          },
+          {
+            path: "set-charity",
+            element: <AddCharity />,
           },
         ],
       },
