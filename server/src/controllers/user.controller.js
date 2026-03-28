@@ -216,6 +216,40 @@ const getCharitiesDetails = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, charities, 'Charities fetched successfully'));
 });
+
+const selectCharity = asyncHandler(async (req, res) => {
+  const { charityId, charityPercentage } = req.body;
+
+  // validation
+  if (!charityId || !charityPercentage) {
+    throw new ApiError(400, 'All fields are required');
+  }
+
+  if (charityPercentage < 10) {
+    throw new ApiError(400, 'Minimum contribution is 10%');
+  }
+
+  // check charity exists
+  const charity = await Charity.findById(charityId);
+
+  if (!charity) {
+    throw new ApiError(404, 'Charity not found');
+  }
+
+  // update user
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        charity: charityId,
+        charityPercentage: charityPercentage,
+      },
+    },
+    { new: true }
+  ).populate('charity');
+
+  return res.status(200).json(new ApiResponse(200, user, 'Charity selected successfully'));
+});
 export {
   registerUser,
   loginUser,
@@ -223,4 +257,5 @@ export {
   updateUserProfile,
   setSubscriptionDetails,
   getCharitiesDetails,
+  selectCharity,
 };
