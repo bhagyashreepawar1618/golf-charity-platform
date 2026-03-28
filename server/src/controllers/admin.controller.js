@@ -3,6 +3,7 @@ import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { Admin } from '../models/admin.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
+import { Charity } from '../models/charity.model.js';
 
 const generateAccessAndRefreshTokens = async (adminId) => {
   try {
@@ -124,4 +125,41 @@ const loginAdmin = asyncHandler(async (req, res) => {
     )
   );
 });
-export { registerAdmin, loginAdmin };
+
+const setCharity = asyncHandler(async (req, res) => {
+  //take details from admin
+  const { name, description } = req.body;
+
+  //validation
+  if (!name || !description) {
+    throw new ApiError(400, 'all feilds are required');
+  }
+
+  const imageLocalPath = req.files?.image?.[0]?.path;
+
+  if (!imageLocalPath) {
+    throw new ApiError(400, 'Image is required');
+  }
+
+  //after getting image upload it on cloudinary
+  const image = await uploadOnCloudinary(imageLocalPath);
+
+  if (!image) {
+    throw new ApiError(500, 'something went wrong while uploading on cloudinary');
+  }
+
+  //after uploading successfully store in database
+  const charity = await Charity.create({
+    name,
+    description,
+    image: image?.url,
+  });
+
+  if (!charity) {
+    throw new ApiError(500, 'something went wrong while storing details in database');
+  }
+
+  console.log('before response');
+  return res.status(200).json(new ApiResponse(200, charity, 'Charity Details stored successfully'));
+});
+export { registerAdmin, loginAdmin, setCharity };
