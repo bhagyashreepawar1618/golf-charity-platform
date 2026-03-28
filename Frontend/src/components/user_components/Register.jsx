@@ -1,7 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
+
+  const [role, setRole] = useState("user"); // 🔥 NEW
+
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
@@ -12,7 +17,7 @@ export default function Register() {
 
   const [loading, setLoading] = useState(false);
 
-  // handle input change
+  // input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -22,7 +27,7 @@ export default function Register() {
     });
   };
 
-  // handle file
+  // file
   const handleFileChange = (e) => {
     setFormData({
       ...formData,
@@ -44,13 +49,19 @@ export default function Register() {
       data.append("password", formData.password);
       data.append("ProfilePicture", formData.ProfilePicture);
 
-      const res = await axios.post(
-        "http://localhost:8000/api/v1/user/register",
-        data,
-      );
+      // 🔥 dynamic endpoint
+      const endpoint =
+        role === "admin"
+          ? "http://localhost:8000/api/v1/admin/register"
+          : "http://localhost:8000/api/v1/user/register";
+
+      const res = await axios.post(endpoint, data);
 
       console.log(res.data);
-      alert("User Registered Successfully");
+
+      alert(`${role} Registered Successfully 😤🔥`);
+
+      navigate("/login", { replace: true });
     } catch (error) {
       console.error(error.response?.data || error.message);
       alert(error.response?.data?.message || "Something went wrong");
@@ -70,6 +81,27 @@ export default function Register() {
         <h2 className="text-2xl font-semibold text-center text-[#C8A2FF] mb-6">
           Create Account
         </h2>
+
+        {/* 🔥 ROLE TOGGLE */}
+        <div className="flex mb-6 bg-[#4B0F73]/30 rounded-lg p-1">
+          <button
+            onClick={() => setRole("user")}
+            className={`flex-1 py-2 rounded-md text-sm ${
+              role === "user" ? "bg-[#C8A2FF] text-black" : "text-[#C8A2FF]"
+            }`}
+          >
+            User
+          </button>
+
+          <button
+            onClick={() => setRole("admin")}
+            className={`flex-1 py-2 rounded-md text-sm ${
+              role === "admin" ? "bg-[#C8A2FF] text-black" : "text-[#C8A2FF]"
+            }`}
+          >
+            Admin
+          </button>
+        </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
@@ -104,7 +136,6 @@ export default function Register() {
             className="p-3 rounded-lg bg-transparent border border-[#7B2CBF]/40 text-[#C8A2FF]"
           />
 
-          {/* File */}
           <input
             type="file"
             name="ProfilePicture"
@@ -117,7 +148,7 @@ export default function Register() {
             disabled={loading}
             className="mt-4 bg-[#C8A2FF] text-black py-3 rounded-lg font-semibold hover:bg-[#7B2CBF] hover:text-white transition"
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Registering..." : `Register as ${role}`}
           </button>
         </form>
       </div>
