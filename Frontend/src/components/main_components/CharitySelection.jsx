@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "../../contexts/User.context.jsx";
 
 export default function SelectCharity() {
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const token = localStorage.getItem("UseraccessToken");
 
@@ -60,7 +62,8 @@ export default function SelectCharity() {
         },
       );
 
-      console.log("response=", res.data);
+      console.log("response is this =", res.data.data);
+      setUser(res.data.data);
 
       alert("Charity Selected 💜");
       navigate("/profile", { replace: true });
