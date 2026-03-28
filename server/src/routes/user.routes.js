@@ -5,6 +5,7 @@ import {
   loginUser,
   getCurrentUser,
   updateUserProfile,
+  setSubscriptionDetails,
 } from '../controllers/user.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import { verifyJWT } from '../middlewares/auth.middleware.js';
@@ -20,9 +21,7 @@ router.route('/register').post(
   ]),
   registerUser
 );
-
 router.route('/login').post(loginUser);
-
 router.route('/get-current-user').get(verifyJWT, getCurrentUser);
 router.route('/update-user-profile').post(
   upload.fields([
@@ -34,4 +33,5 @@ router.route('/update-user-profile').post(
   verifyJWT,
   updateUserProfile
 );
+router.route('/set-subscription-details').post(verifyJWT, setSubscriptionDetails);
 export default router;
