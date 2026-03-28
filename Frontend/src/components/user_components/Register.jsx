@@ -52,7 +52,7 @@ export default function Register() {
       // 🔥 dynamic endpoint
       const endpoint =
         role === "admin"
-          ? "http://localhost:8000/api/v1/admin/register"
+          ? "http://localhost:8000/api/v1/admin/admin-register"
           : "http://localhost:8000/api/v1/user/register";
 
       const res = await axios.post(endpoint, data);

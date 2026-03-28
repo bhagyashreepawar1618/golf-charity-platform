@@ -2,10 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../contexts/User.context.jsx";
+import { useAdmin } from "../../contexts/Admin.context.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
   const { setUser } = useUser();
+  const { setAdmin } = useAdmin();
 
   const [role, setRole] = useState("user");
   const [formData, setFormData] = useState({
@@ -34,7 +36,7 @@ export default function Login() {
 
       const endpoint =
         role === "admin"
-          ? "http://localhost:8000/api/v1/admin/login"
+          ? "http://localhost:8000/api/v1/admin/login-admin"
           : "http://localhost:8000/api/v1/user/login";
 
       const res = await axios.post(endpoint, {
@@ -43,17 +45,26 @@ export default function Login() {
       });
 
       // store tokens
-      localStorage.setItem("UseraccessToken", res.data.data.accessToken);
-      localStorage.setItem("UserRefreshToken", res.data.data.refreshToken);
+      if (role == "user") {
+        localStorage.setItem("UseraccessToken", res.data.data.accessToken);
+        localStorage.setItem("UserRefreshToken", res.data.data.refreshToken);
+      } else {
+        localStorage.setItem("adminaccessToken", res.data.data.accessToken);
+        localStorage.setItem("adminrefreshToken", res.data.data.refreshToken);
+      }
 
       console.log("User info=", res.data.data.user.email);
-      setUser(res.data.data.user);
+      if ((role = "user")) {
+        setUser(res.data.data.user);
+      } else {
+        setAdmin(res.data.data.admin);
+      }
 
-      alert(`${role} Login Successful 😤🔥`);
+      alert(`${role} Login Successful`);
 
-      // 🔥 NAVIGATION
+      //  NAVIGATION
       if (role === "admin") {
-        navigate("/admin");
+        navigate("/admin-profile");
       } else {
         navigate("/profile");
       }
