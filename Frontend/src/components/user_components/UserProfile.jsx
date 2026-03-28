@@ -104,25 +104,45 @@ export default function Profile() {
         </div>
 
         {/* CHARITY DETAILS */}
+        {/* CHARITY DETAILS */}
         <div className="mt-6">
           <h3 className="text-lg font-semibold text-[#C8A2FF] mb-3">
             Charity Contribution
           </h3>
 
-          <div className="bg-[#2A0A3D] p-4 rounded-xl flex flex-col gap-2">
-            <p className="text-sm text-[#C8A2FF]/70">
-              Selected Charity:{" "}
-              <span className="text-[#C8A2FF] font-semibold">
-                {user?.charity?.name || "Not Selected"}
-              </span>
-            </p>
+          <div className="bg-[#2A0A3D] p-4 rounded-xl">
+            {user?.charity ? (
+              <div className="flex items-center gap-4">
+                {/* Image */}
+                <img
+                  src={user?.charity?.image}
+                  alt="charity"
+                  className="w-16 h-16 rounded-lg object-cover border border-[#C8A2FF]"
+                />
 
-            <p className="text-sm text-[#C8A2FF]/70">
-              Contribution:{" "}
-              <span className="text-[#C8A2FF] font-semibold">
-                {user?.charityPercentage || 0}%
-              </span>
-            </p>
+                {/* Info */}
+                <div className="flex flex-col">
+                  <h4 className="text-[#C8A2FF] font-semibold">
+                    {user?.charity?.name}
+                  </h4>
+
+                  <p className="text-xs text-[#C8A2FF]/60 line-clamp-2">
+                    {user?.charity?.description}
+                  </p>
+
+                  <p className="text-xs mt-1 text-[#C8A2FF]/70">
+                    Contribution:{" "}
+                    <span className="text-[#C8A2FF] font-semibold">
+                      {user?.charityPercentage || 10}%
+                    </span>
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-[#C8A2FF]/60">
+                No charity selected yet
+              </p>
+            )}
           </div>
         </div>
 
