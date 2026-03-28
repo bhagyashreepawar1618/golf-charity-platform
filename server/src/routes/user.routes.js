@@ -1,6 +1,11 @@
 import { Router } from 'express';
 
-import { registerUser, loginUser, getCurrentUser } from '../controllers/user.controller.js';
+import {
+  registerUser,
+  loginUser,
+  getCurrentUser,
+  updateUserProfile,
+} from '../controllers/user.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import { verifyJWT } from '../middlewares/auth.middleware.js';
 
@@ -19,4 +24,14 @@ router.route('/register').post(
 router.route('/login').post(loginUser);
 
 router.route('/get-current-user').get(verifyJWT, getCurrentUser);
+router.route('/update-user-profile').post(
+  upload.fields([
+    {
+      name: 'ProfilePicture',
+      maxCount: 1,
+    },
+  ]),
+  verifyJWT,
+  updateUserProfile
+);
 export default router;
