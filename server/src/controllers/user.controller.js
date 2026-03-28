@@ -132,4 +132,41 @@ const loginUser = asyncHandler(async (req, res) => {
 const getCurrentUser = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, req.user, 'User fetched successfully'));
 });
-export { registerUser, loginUser, getCurrentUser };
+
+const updateUserProfile = asyncHandler(async (req, res) => {
+  //take new details from user
+  const { username, email, fullname } = req.body;
+
+  //validation
+  if (!username || !email || !fullname) {
+    throw new ApiError(400, 'all feilds are compulsory..');
+  }
+
+  const ProfilePictureLocalPath = req.files?.ProfilePicture?.[0]?.path;
+  console.log('PP=', ProfilePictureLocalPath);
+
+  if (!ProfilePictureLocalPath) {
+    throw new ApiError(400, 'Profile Picture is required ');
+  }
+
+  const ProfilePicture = await uploadOnCloudinary(ProfilePictureLocalPath);
+
+  //after getting all details
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        fullname,
+        email,
+        username,
+        ProfilePicture: ProfilePicture?.url,
+      },
+    },
+    {
+      new: true,
+    }
+  ).select('-password');
+
+  return res.status(200).json(new ApiResponse(200, user, 'User details are updated successfully'));
+});
+export { registerUser, loginUser, getCurrentUser, updateUserProfile };
