@@ -169,4 +169,45 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, user, 'User details are updated successfully'));
 });
-export { registerUser, loginUser, getCurrentUser, updateUserProfile };
+
+const setSubscriptionDetails = asyncHandler(async (req, res) => {
+  //get data from user
+  const { status, plan, expiryDate } = req.body;
+
+  console.log('data=', status, plan);
+
+  //validation
+  if (status === undefined || !plan || !expiryDate) {
+    throw new ApiError(400, 'All fields are required');
+  }
+
+  //after getting feilds store them in data base
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        subscription: {
+          status,
+          plan,
+          expiryDate,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  if (!user) {
+    throw new ApiError(400, 'Something went wrong while storing subscription details');
+  }
+
+  //if stored successfully then send response
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, 'subscription details stored successfully..!!'));
+});
+
+// const setCharityDetails = asyncHandler(async (req, res) => {
+//   //get charity details from user
+//   const { name, description };
+// });
+export { registerUser, loginUser, getCurrentUser, updateUserProfile, setSubscriptionDetails };
