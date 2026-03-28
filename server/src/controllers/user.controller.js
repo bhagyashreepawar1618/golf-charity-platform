@@ -3,6 +3,7 @@ import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { User } from '../models/user.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
+import { Charity } from '../models/charity.model.js';
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -206,8 +207,20 @@ const setSubscriptionDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, 'subscription details stored successfully..!!'));
 });
 
-// const setCharityDetails = asyncHandler(async (req, res) => {
-//   //get charity details from user
-//   const { name, description };
-// });
-export { registerUser, loginUser, getCurrentUser, updateUserProfile, setSubscriptionDetails };
+const getCharitiesDetails = asyncHandler(async (req, res) => {
+  const charities = await Charity.find({ isActive: true }).sort({ createdAt: -1 });
+
+  if (!charities) {
+    throw new ApiError(404, 'No charities found');
+  }
+
+  return res.status(200).json(new ApiResponse(200, charities, 'Charities fetched successfully'));
+});
+export {
+  registerUser,
+  loginUser,
+  getCurrentUser,
+  updateUserProfile,
+  setSubscriptionDetails,
+  getCharitiesDetails,
+};
