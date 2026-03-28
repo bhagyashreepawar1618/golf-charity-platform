@@ -39,6 +39,26 @@ const userSchema = new Schema(
       required: [true, 'password is required'],
     },
 
+    subscription: {
+      status: {
+        type: String,
+        enum: ['active', 'inactive', 'expired'],
+        default: 'inactive',
+      },
+      plan: {
+        type: String,
+        enum: ['monthly', 'yearly'],
+      },
+      expiryDate: {
+        type: Date,
+      },
+    },
+
+    charity: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Charity',
+    },
+
     refreshToken: {
       type: String,
     },
