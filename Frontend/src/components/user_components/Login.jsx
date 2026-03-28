@@ -6,7 +6,7 @@ import { useAdmin } from "../../contexts/Admin.context.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setUser } = useUser();
+  const { setUser, user } = useUser();
   const { setAdmin } = useAdmin();
 
   const [role, setRole] = useState("user");
@@ -55,13 +55,17 @@ export default function Login() {
         setAdmin(res.data.data.admin);
       }
 
-      alert(`${role} Login Successful`);
-
       //  NAVIGATION
       if (role === "admin") {
         navigate("/admin-profile");
       } else {
-        navigate("/profile");
+        if (!user.isSubscribed) {
+          navigate("/subscribe");
+        } else if (!user.charity) {
+          navigate("/select-charity");
+        } else {
+          navigate("/profile");
+        }
       }
     } catch (error) {
       console.error(error.response?.data || error.message);
