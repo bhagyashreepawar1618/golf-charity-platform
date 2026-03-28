@@ -73,6 +73,59 @@ export default function Profile() {
           </div>
         </div>
 
+        {/* SUBSCRIPTION DETAILS */}
+        <div className="mt-10">
+          <h3 className="text-lg font-semibold text-[#C8A2FF] mb-3">
+            Subscription Details
+          </h3>
+
+          <div className="bg-[#2A0A3D] p-4 rounded-xl flex flex-col gap-2">
+            <p className="text-sm text-[#C8A2FF]/70">
+              Status:{" "}
+              <span className="text-[#C8A2FF] font-semibold">
+                {user?.subscription?.status ? "Active ✅" : "Inactive ❌"}
+              </span>
+            </p>
+
+            <p className="text-sm text-[#C8A2FF]/70">
+              Plan:{" "}
+              <span className="text-[#C8A2FF] font-semibold">
+                {user?.subscription?.plan || "N/A"}
+              </span>
+            </p>
+
+            <p className="text-sm text-[#C8A2FF]/70">
+              Expiry:{" "}
+              <span className="text-[#C8A2FF] font-semibold">
+                {user?.subscription?.expiryDate || "N/A"}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        {/* CHARITY DETAILS */}
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-[#C8A2FF] mb-3">
+            Charity Contribution
+          </h3>
+
+          <div className="bg-[#2A0A3D] p-4 rounded-xl flex flex-col gap-2">
+            <p className="text-sm text-[#C8A2FF]/70">
+              Selected Charity:{" "}
+              <span className="text-[#C8A2FF] font-semibold">
+                {user?.charity?.name || "Not Selected"}
+              </span>
+            </p>
+
+            <p className="text-sm text-[#C8A2FF]/70">
+              Contribution:{" "}
+              <span className="text-[#C8A2FF] font-semibold">
+                {user?.charityPercentage || 0}%
+              </span>
+            </p>
+          </div>
+        </div>
+
         {/* ACTIONS */}
         <div className="flex justify-center md:justify-end gap-4 mt-10">
           <button
