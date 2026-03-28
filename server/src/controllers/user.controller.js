@@ -4,6 +4,27 @@ import asyncHandler from '../utils/asyncHandler.js';
 import { User } from '../models/user.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
 
+const generateAccessAndRefreshTokens = async (userId) => {
+  try {
+    //user Instance
+    const user = await User.findById(userId);
+    //we've got all the properties in user (user is an object)
+
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+
+    user.refreshToken = refreshToken;
+    user.accessToken = accessToken;
+
+    //directly save in database without validation
+    await user.save({ validateBeforeSave: false });
+
+    return { accessToken, refreshToken };
+  } catch (error) {
+    throw new ApiError(500, 'Something went wrong While generating Refresh and Access Token');
+  }
+};
+
 const registerUser = asyncHandler(async (req, res) => {
   //get details from user (frontend)
   //validation if email is correct -not empty fields
@@ -67,4 +88,44 @@ const registerUser = asyncHandler(async (req, res) => {
   return res.status(201).json(new ApiResponse(201, createdUser, 'User registered successfully...'));
 });
 
-export { registerUser };
+const loginUser = asyncHandler(async (req, res) => {
+  //take inputs from
+  const { username, password } = req.body;
+
+  if (!username) {
+    throw new ApiError(400, 'username is required');
+  }
+
+  const user = await User.findOne({ username });
+
+  const isPassValid = await user.isPasswordCorrect(password);
+
+  if (!isPassValid) {
+    throw new ApiError(401, 'Invalid user Credentials');
+  }
+
+  //if password is correct generate refresh and accesstokens
+  //from user Instance we can get access of _id attribute
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
+
+  console.log('access token is= ', accessToken);
+
+  //remove password and refresh token then send the response (send accessToken and other info)
+  const loggedInUser = await User.findById(user._id).select('-password -refreshToken ');
+
+  //it can be only modified in server
+  //response
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        user: loggedInUser,
+        accessToken,
+        refreshToken,
+      },
+      'User logged in successfully'
+    )
+  );
+});
+export { registerUser, loginUser };
