@@ -4,6 +4,7 @@ import asyncHandler from '../utils/asyncHandler.js';
 import { Admin } from '../models/admin.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
 import { Charity } from '../models/charity.model.js';
+import { User } from '../models/user.model.js';
 
 const generateAccessAndRefreshTokens = async (adminId) => {
   try {
@@ -162,4 +163,22 @@ const setCharity = asyncHandler(async (req, res) => {
   console.log('before response');
   return res.status(200).json(new ApiResponse(200, charity, 'Charity Details stored successfully'));
 });
-export { registerAdmin, loginAdmin, setCharity };
+
+const getUsersWithCount = asyncHandler(async (req, res) => {
+  const users = await User.find().select('-password -refreshToken').populate('charity');
+  const totalUsers = await User.countDocuments();
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        totalUsers,
+        users,
+      },
+      'Users fetched successfully'
+    )
+  );
+});
+
+const getsubscriptionDeatilsAndCount = asyncHandler(async (req, res) => {});
+export { registerAdmin, loginAdmin, setCharity, getUsersWithCount, getsubscriptionDeatilsAndCount };
