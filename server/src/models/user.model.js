@@ -41,9 +41,8 @@ const userSchema = new Schema(
 
     subscription: {
       status: {
-        type: String,
-        enum: ['active', 'inactive', 'expired'],
-        default: 'inactive',
+        type: Boolean,
+        default: false,
       },
       plan: {
         type: String,
@@ -58,6 +57,22 @@ const userSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Charity',
     },
+
+    scores: [
+      {
+        value: {
+          type: Number,
+          min: 1,
+          max: 45,
+          required: true,
+        },
+        date: {
+          type: Date,
+          required: true,
+          default: Date.now,
+        },
+      },
+    ],
 
     refreshToken: {
       type: String,
