@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { registerAdmin, loginAdmin, setCharity } from '../controllers/admin.controller.js';
+import {
+  registerAdmin,
+  loginAdmin,
+  setCharity,
+  getUsersWithCount,
+} from '../controllers/admin.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import { verifyJWT } from '../middlewares/adminauth.middleware.js';
 
@@ -26,4 +31,6 @@ router.route('/set-charity').post(
   verifyJWT,
   setCharity
 );
+
+router.route('/get-all-users').get(verifyJWT, getUsersWithCount);
 export default router;
