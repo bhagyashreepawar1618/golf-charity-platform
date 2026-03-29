@@ -4,9 +4,12 @@ import axios from "axios";
 const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userscore, setUserScore] = useState([]);
   const value = {
     user,
     setUser,
+    userscore,
+    setUserScore,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
