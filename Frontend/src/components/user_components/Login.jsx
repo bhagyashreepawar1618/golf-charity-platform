@@ -44,6 +44,8 @@ export default function Login() {
         password: formData.password,
       });
 
+      console.log("user is=", res.data.data.user);
+
       // store tokens
       if (role == "user") {
         localStorage.setItem("UseraccessToken", res.data.data.accessToken);
@@ -59,9 +61,9 @@ export default function Login() {
       if (role === "admin") {
         navigate("/admin-profile");
       } else {
-        if (!user.isSubscribed) {
+        if (!user?.subscription?.status) {
           navigate("/subscribe");
-        } else if (!user.charity) {
+        } else if (!user?.charity) {
           navigate("/select-charity");
         } else {
           navigate("/profile");
