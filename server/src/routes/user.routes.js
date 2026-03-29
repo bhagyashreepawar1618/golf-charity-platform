@@ -8,6 +8,7 @@ import {
   setSubscriptionDetails,
   getCharitiesDetails,
   selectCharity,
+  addScore,
 } from '../controllers/user.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import { verifyJWT } from '../middlewares/auth.middleware.js';
@@ -38,4 +39,5 @@ router.route('/update-user-profile').post(
 router.route('/set-subscription-details').post(verifyJWT, setSubscriptionDetails);
 router.route('/get-charities').get(verifyJWT, getCharitiesDetails);
 router.route('/select-charity').post(verifyJWT, selectCharity);
+router.route('/add-score').post(verifyJWT, addScore);
 export default router;
