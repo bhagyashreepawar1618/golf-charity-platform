@@ -19,6 +19,7 @@ import SelectCharity from "./components/main_components/CharitySelection.jsx";
 import AddCharity from "./components/admin_components/SetCharity.jsx";
 import MyScores from "./components/user_components/MyScores.jsx";
 import UserList from "./components/admin_components/UserList.jsx";
+import Draw from "./components/admin_components/Draw.jsx";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "get-users-list",
         element: <UserList />,
+      },
+      {
+        path: "run-draw",
+        element: <Draw />,
       },
     ],
   },
