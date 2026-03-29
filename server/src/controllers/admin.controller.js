@@ -181,4 +181,60 @@ const getUsersWithCount = asyncHandler(async (req, res) => {
 });
 
 const getsubscriptionDeatilsAndCount = asyncHandler(async (req, res) => {});
-export { registerAdmin, loginAdmin, setCharity, getUsersWithCount, getsubscriptionDeatilsAndCount };
+
+const runDraw = asyncHandler(async (req, res) => {
+  const users = await User.find();
+
+  if (!users.length) {
+    throw new ApiError(404, 'No users found');
+  }
+
+  // generate 5 random numbers (1-45)
+  const drawNumbers = [];
+  while (drawNumbers.length < 5) {
+    const num = Math.floor(Math.random() * 45) + 1;
+    if (!drawNumbers.includes(num)) {
+      drawNumbers.push(num);
+    }
+  }
+
+  let winners = [];
+
+  // check each user
+  users.forEach((user) => {
+    const userScores = user.scores?.slice(-5).map((s) => s.value);
+
+    if (!userScores || userScores.length < 5) return;
+
+    const matches = userScores.filter((num) => drawNumbers.includes(num));
+
+    if (matches.length >= 3) {
+      winners.push({
+        userId: user._id,
+        name: user.fullname,
+        matches: matches.length,
+        numbers: userScores,
+      });
+    }
+  });
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        drawNumbers,
+        winners,
+      },
+      'Draw completed '
+    )
+  );
+});
+
+export {
+  registerAdmin,
+  loginAdmin,
+  setCharity,
+  getUsersWithCount,
+  getsubscriptionDeatilsAndCount,
+  runDraw,
+};
