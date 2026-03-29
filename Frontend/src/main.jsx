@@ -18,6 +18,7 @@ import UpdateProfile from "./components/user_components/UpdateUserProfile.jsx";
 import Subscription from "./components/main_components/Subscription.jsx";
 import SelectCharity from "./components/main_components/CharitySelection.jsx";
 import AddCharity from "./components/admin_components/SetCharity.jsx";
+import MyScores from "./components/user_components/MyScores.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "my-scores",
+        element: <MyScores />,
       },
       {
         path: "add-score",
