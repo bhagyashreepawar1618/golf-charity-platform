@@ -11,7 +11,6 @@ import Register from "./components/user_components/Register.jsx";
 import Login from "./components/user_components/Login.jsx";
 import Profile from "./components/user_components/UserProfile.jsx";
 import AuthLoader from "./components/user_components/AuthLoader.jsx";
-import AdminLayout from "./components/admin_components/AdminLayout.jsx";
 import AdminDashboard from "./components/admin_components/AdminDashboard.jsx";
 import AddScore from "./components/user_components/AddScore.jsx";
 import UpdateProfile from "./components/user_components/UpdateUserProfile.jsx";
@@ -19,6 +18,7 @@ import Subscription from "./components/main_components/Subscription.jsx";
 import SelectCharity from "./components/main_components/CharitySelection.jsx";
 import AddCharity from "./components/admin_components/SetCharity.jsx";
 import MyScores from "./components/user_components/MyScores.jsx";
+import UserList from "./components/admin_components/UserList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -63,17 +63,15 @@ const router = createBrowserRouter([
       },
       {
         path: "admin-profile",
-        element: <AdminLayout />,
-        children: [
-          {
-            path: "admin-dashboard",
-            element: <AdminDashboard />,
-          },
-          {
-            path: "set-charity",
-            element: <AddCharity />,
-          },
-        ],
+        element: <AdminDashboard />,
+      },
+      {
+        path: "set-charity",
+        element: <AddCharity />,
+      },
+      {
+        path: "get-users-list",
+        element: <UserList />,
       },
     ],
   },
