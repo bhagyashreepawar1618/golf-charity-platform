@@ -5,14 +5,22 @@ A subscription-based golf platform where users can track scores, participate in 
 ---
 
 ## 🔗 Live Demo
-[ URL here]
+frontend : https://golf-charity-platform-ochre-six.vercel.app
+---
+backend: https://golf-charity-platform-7kye.onrender.com
 
 ## 📸 Screenshots
 - User Dashboard
-- 
+- <img width="1897" height="867" alt="image" src="https://github.com/user-attachments/assets/670f5705-8007-4c35-98e7-e575f4e378dc" />
+
 - Score Entry
+- <img width="1893" height="863" alt="image" src="https://github.com/user-attachments/assets/648c37c6-7d30-44b2-8b5c-1ba154bcc472" />
+
 - Admin Panel
+- <img width="1886" height="862" alt="image" src="https://github.com/user-attachments/assets/5ce97462-9ed1-43e4-8160-64cc66223d74" />
+
 - Draw Results
+- <img width="1901" height="866" alt="image" src="https://github.com/user-attachments/assets/57eecdd4-9bde-42fd-9ac4-3d5db8ed8c17" />
 
 ---
 
@@ -36,9 +44,8 @@ A subscription-based golf platform where users can track scores, participate in 
 ## 🛠️ Tech Stack
 - Frontend: React / Next.js
 - Backend: Node.js, Express
-- Database: Supabase (or PostgreSQL)
-- Authentication: JWT
-- Payments: Stripe
+- Database: MongoDB
+- Authentication: JWT ,bcrpt
 
 ---
 
