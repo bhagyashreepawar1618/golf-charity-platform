@@ -112,7 +112,9 @@ const loginUser = asyncHandler(async (req, res) => {
   console.log('access token is= ', accessToken);
 
   //remove password and refresh token then send the response (send accessToken and other info)
-  const loggedInUser = await User.findById(user._id).select('-password -refreshToken ');
+  const loggedInUser = await User.findById(user._id)
+    .select('-password -refreshToken ')
+    .populate('charity');
 
   //it can be only modified in server
   //response
@@ -131,7 +133,8 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-  return res.status(200).json(new ApiResponse(200, req.user, 'User fetched successfully'));
+  const user = await User.findById(req.user._id).select('-password').populate('charity');
+  return res.status(200).json(new ApiResponse(200, user, 'User fetched successfully'));
 });
 
 const updateUserProfile = asyncHandler(async (req, res) => {
@@ -250,6 +253,34 @@ const selectCharity = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, user, 'Charity selected successfully'));
 });
+
+const addScore = asyncHandler(async (req, res) => {
+  //take score from user
+  const { score } = req.body;
+
+  if (!score || score < 1 || score > 45) {
+    throw new ApiError(400, 'Invalid Score');
+  }
+
+  const user = await User.findById(req.user._id);
+
+  if (user.scores.length >= 5) {
+    user.scores.shift(); //removes oldest score
+  }
+
+  user.scores.push({
+    value: score,
+    date: new Date(),
+  });
+
+  await user.save();
+
+  return res.status(200).json(new ApiResponse(200, user.scores, 'Score added successfully'));
+});
+
+const getScore = asyncHandler(async (req, res) => {
+  return res.status(200).json(new ApiResponse(200, req.user, 'scores fetched successfully'));
+});
 export {
   registerUser,
   loginUser,
@@ -258,4 +289,6 @@ export {
   setSubscriptionDetails,
   getCharitiesDetails,
   selectCharity,
+  addScore,
+  getScore,
 };
