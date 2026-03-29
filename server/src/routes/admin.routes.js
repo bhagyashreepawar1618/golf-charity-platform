@@ -22,16 +22,7 @@ router.route('/admin-register').post(
 );
 
 router.route('/login-admin').post(loginAdmin);
-router.route('/set-charity').post(
-  upload.fields([
-    {
-      name: 'image',
-      maxCount: 1,
-    },
-  ]),
-  verifyJWT,
-  setCharity
-);
+router.route('/set-charity').post(upload.single('image'), verifyJWT, setCharity);
 
 router.route('/get-all-users').get(verifyJWT, getUsersWithCount);
 router.route('/run-draw').get(verifyJWT, runDraw);

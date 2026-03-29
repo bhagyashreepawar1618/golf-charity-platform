@@ -2,7 +2,7 @@ import ApiError from '../utils/ApiErrors.js';
 import ApiResponse from '../utils/ApiResponse.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { Admin } from '../models/admin.model.js';
-import uploadOnCloudinary from '../utils/cloudinary.js';
+import { uploadOnCloudinary } from '../middlewares/multer.middleware.js';
 import { Charity } from '../models/charity.model.js';
 import { User } from '../models/user.model.js';
 
@@ -128,40 +128,35 @@ const loginAdmin = asyncHandler(async (req, res) => {
 });
 
 const setCharity = asyncHandler(async (req, res) => {
-  //take details from admin
   const { name, description } = req.body;
 
-  //validation
   if (!name || !description) {
-    throw new ApiError(400, 'all feilds are required');
+    throw new ApiError(400, 'All fields are required');
   }
 
-  const imageLocalPath = req.files?.image?.[0]?.path;
-
-  if (!imageLocalPath) {
+  if (!req.file) {
     throw new ApiError(400, 'Image is required');
   }
 
-  //after getting image upload it on cloudinary
-  const image = await uploadOnCloudinary(imageLocalPath);
-
-  if (!image) {
-    throw new ApiError(500, 'something went wrong while uploading on cloudinary');
+  let cloudinaryResult;
+  try {
+    cloudinaryResult = await uploadOnCloudinary(req.file.buffer, 'charities');
+  } catch (error) {
+    console.error('Cloudinary upload error:', error);
+    throw new ApiError(500, 'Something went wrong while uploading image');
   }
 
-  //after uploading successfully store in database
   const charity = await Charity.create({
     name,
     description,
-    image: image?.url,
+    image: cloudinaryResult.secure_url,
   });
 
   if (!charity) {
-    throw new ApiError(500, 'something went wrong while storing details in database');
+    throw new ApiError(500, 'Something went wrong while storing charity in database');
   }
 
-  console.log('before response');
-  return res.status(200).json(new ApiResponse(200, charity, 'Charity Details stored successfully'));
+  return res.status(200).json(new ApiResponse(200, charity, 'Charity details stored successfully'));
 });
 
 const getUsersWithCount = asyncHandler(async (req, res) => {
