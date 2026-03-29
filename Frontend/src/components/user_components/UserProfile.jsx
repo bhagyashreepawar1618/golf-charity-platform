@@ -2,7 +2,7 @@ import { useUser } from "../../contexts/User.context.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const { user } = useUser();
+  const { user, userscore } = useUser();
   const navigate = useNavigate();
 
   return (
@@ -42,18 +42,29 @@ export default function Profile() {
             </div>
           </div>
 
-          <button
-            onClick={() => navigate("/add-score")}
-            className="px-5 py-2 bg-[#C8A2FF] text-black rounded-lg hover:bg-[#7B2CBF] hover:text-white transition shadow-md"
-          >
-            + Add Score
-          </button>
+          <div className="flex flex-col gap-3">
+            <button
+              onClick={() => navigate("/add-score")}
+              className="px-5 py-2 bg-[#C8A2FF] text-black rounded-lg hover:bg-[#7B2CBF] hover:text-white transition shadow-md"
+            >
+              + Add Score
+            </button>
+
+            <button
+              onClick={() => navigate("/my-scores")}
+              className="px-5 py-2 border border-[#C8A2FF] text-[#C8A2FF] rounded-lg hover:bg-[#7B2CBF]/30 transition"
+            >
+              Show My Scores
+            </button>
+          </div>
         </div>
 
         {/* STATS */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
           <div className="bg-[#2A0A3D] p-4 rounded-xl text-center hover:scale-105 transition">
-            <h3 className="text-xl font-bold text-[#C8A2FF]">5</h3>
+            <h3 className="text-xl font-bold text-[#C8A2FF]">
+              {userscore?.length}
+            </h3>
             <p className="text-xs text-[#C8A2FF]/60">Scores</p>
           </div>
 
