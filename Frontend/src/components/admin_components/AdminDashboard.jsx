@@ -91,7 +91,12 @@ export default function AdminDashboard() {
             </h2>
 
             <div className="flex flex-wrap gap-4">
-              <button className="px-4 py-2 bg-[#C8A2FF] text-black rounded-lg hover:bg-[#7B2CBF] hover:text-white transition">
+              <button
+                className="px-4 py-2 bg-[#C8A2FF] text-black rounded-lg hover:bg-[#7B2CBF] hover:text-white transition"
+                onClick={() => {
+                  navigate("/run-draw");
+                }}
+              >
                 Add Draw
               </button>
 
