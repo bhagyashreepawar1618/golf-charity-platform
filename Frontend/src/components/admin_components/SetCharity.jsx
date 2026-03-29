@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AddCharity() {
+  const navigate = useNavigate();
   const token = localStorage.getItem("adminaccessToken");
 
   const [formData, setFormData] = useState({
@@ -64,6 +66,7 @@ export default function AddCharity() {
       console.log("Charity created:", res.data);
 
       alert("Charity Added Successfully 💜");
+      navigate("/admin-profile", { replace: true });
 
       // reset
       setFormData({
