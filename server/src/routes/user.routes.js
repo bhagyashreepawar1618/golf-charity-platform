@@ -9,6 +9,7 @@ import {
   getCharitiesDetails,
   selectCharity,
   addScore,
+  getScore,
 } from '../controllers/user.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import { verifyJWT } from '../middlewares/auth.middleware.js';
@@ -40,4 +41,5 @@ router.route('/set-subscription-details').post(verifyJWT, setSubscriptionDetails
 router.route('/get-charities').get(verifyJWT, getCharitiesDetails);
 router.route('/select-charity').post(verifyJWT, selectCharity);
 router.route('/add-score').post(verifyJWT, addScore);
+router.route('/get-scores').get(verifyJWT, getScore);
 export default router;
