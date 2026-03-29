@@ -48,7 +48,7 @@ export default function ViewUsers() {
           <h2 className="text-2xl font-bold text-[#C8A2FF]">All Users</h2>
 
           <button
-            onClick={() => navigate("/admin")}
+            onClick={() => navigate("/admin-profile")}
             className="text-sm border border-[#C8A2FF]/40 px-3 py-1 rounded-lg hover:bg-[#7B2CBF]/30 transition"
           >
             Back

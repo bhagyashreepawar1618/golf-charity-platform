@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useUser } from "../../contexts/User.context.jsx";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function MyScores() {
   const { userscore, setUserScore } = useUser();

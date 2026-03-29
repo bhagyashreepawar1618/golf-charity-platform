@@ -53,11 +53,6 @@ export default function AdminDashboard() {
           </div>
 
           <div className="bg-[#2A0A3D] p-6 rounded-2xl border border-[#7B2CBF]/30 shadow-lg hover:scale-[1.04] transition">
-            <h2 className="text-sm text-[#C8A2FF]/70">Subscriptions</h2>
-            <p className="text-3xl font-bold mt-3">80</p>
-          </div>
-
-          <div className="bg-[#2A0A3D] p-6 rounded-2xl border border-[#7B2CBF]/30 shadow-lg hover:scale-[1.04] transition">
             <h2 className="text-sm text-[#C8A2FF]/70">Prize Pool</h2>
             <p className="text-3xl font-bold mt-3">₹50,000</p>
           </div>

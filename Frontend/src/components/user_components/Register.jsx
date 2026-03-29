@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 export default function Register() {
   const navigate = useNavigate();
 
-  const [role, setRole] = useState("user"); // 🔥 NEW
-
   const [formData, setFormData] = useState({
     fullname: "",
     username: "",
@@ -49,17 +47,15 @@ export default function Register() {
       data.append("password", formData.password);
       data.append("ProfilePicture", formData.ProfilePicture);
 
-      // 🔥 dynamic endpoint
-      const endpoint =
-        role === "admin"
-          ? "http://localhost:8000/api/v1/admin/admin-register"
-          : "http://localhost:8000/api/v1/user/register";
-
-      const res = await axios.post(endpoint, data);
+      // Only user endpoint
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/user/register",
+        data,
+      );
 
       console.log(res.data);
 
-      alert(`${role} Registered Successfully 😤🔥`);
+      alert("User Registered Successfully");
 
       navigate("/login", { replace: true });
     } catch (error) {
@@ -81,27 +77,6 @@ export default function Register() {
         <h2 className="text-2xl font-semibold text-center text-[#C8A2FF] mb-6">
           Create Account
         </h2>
-
-        {/* 🔥 ROLE TOGGLE */}
-        <div className="flex mb-6 bg-[#4B0F73]/30 rounded-lg p-1">
-          <button
-            onClick={() => setRole("user")}
-            className={`flex-1 py-2 rounded-md text-sm ${
-              role === "user" ? "bg-[#C8A2FF] text-black" : "text-[#C8A2FF]"
-            }`}
-          >
-            User
-          </button>
-
-          <button
-            onClick={() => setRole("admin")}
-            className={`flex-1 py-2 rounded-md text-sm ${
-              role === "admin" ? "bg-[#C8A2FF] text-black" : "text-[#C8A2FF]"
-            }`}
-          >
-            Admin
-          </button>
-        </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
@@ -148,7 +123,7 @@ export default function Register() {
             disabled={loading}
             className="mt-4 bg-[#C8A2FF] text-black py-3 rounded-lg font-semibold hover:bg-[#7B2CBF] hover:text-white transition"
           >
-            {loading ? "Registering..." : `Register as ${role}`}
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
       </div>

@@ -180,8 +180,6 @@ const getUsersWithCount = asyncHandler(async (req, res) => {
   );
 });
 
-const getsubscriptionDeatilsAndCount = asyncHandler(async (req, res) => {});
-
 const runDraw = asyncHandler(async (req, res) => {
   const users = await User.find();
 
@@ -230,11 +228,4 @@ const runDraw = asyncHandler(async (req, res) => {
   );
 });
 
-export {
-  registerAdmin,
-  loginAdmin,
-  setCharity,
-  getUsersWithCount,
-  getsubscriptionDeatilsAndCount,
-  runDraw,
-};
+export { registerAdmin, loginAdmin, setCharity, getUsersWithCount, runDraw };
