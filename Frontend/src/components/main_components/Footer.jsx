@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Footer() {
+  const navigate = useNavigate();
   return (
     <footer className="bg-[#1A002B] text-[#C8A2FF] border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-10">
@@ -38,7 +40,12 @@ export default function Footer() {
             Join monthly draws, win rewards, and make an impact.
           </p>
 
-          <button className="px-6 py-2 bg-[#C8A2FF] text-black rounded-lg font-semibold hover:bg-[#7B2CBF] hover:text-white transition">
+          <button
+            className="px-6 py-2 bg-[#C8A2FF] text-black rounded-lg font-semibold hover:bg-[#7B2CBF] hover:text-white transition"
+            onClick={() => {
+              navigate("/subscribe");
+            }}
+          >
             Subscribe Now
           </button>
         </div>
