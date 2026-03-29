@@ -26,7 +26,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
   }
 };
 
-export const registerUser = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
   const { fullname, email, username, password } = req.body;
 
   if (!fullname || !username || !email || !password) {
