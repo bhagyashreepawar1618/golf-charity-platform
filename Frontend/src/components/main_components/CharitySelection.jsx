@@ -21,7 +21,7 @@ export default function SelectCharity() {
         setFetchLoading(true);
 
         const res = await axios.get(
-          "http://localhost:8000/api/v1/user/get-charities",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get-charities`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ export default function SelectCharity() {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:8000/api/v1/user/select-charity",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/select-charity`,
         {
           charityId: selectedCharity,
           charityPercentage: percentage,
@@ -65,7 +65,7 @@ export default function SelectCharity() {
       console.log("response is this =", res.data.data);
       setUser(res.data.data);
 
-      alert("Charity Selected 💜");
+      alert("Charity Selected ");
       navigate("/profile", { replace: true });
     } catch (err) {
       console.error(err);
@@ -82,7 +82,7 @@ export default function SelectCharity() {
           Choose Your Charity
         </h2>
 
-        {/* 🔄 Loading */}
+        {/*  Loading */}
         {fetchLoading ? (
           <p className="text-center text-[#C8A2FF]/60">Loading charities...</p>
         ) : (

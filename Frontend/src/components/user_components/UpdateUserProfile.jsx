@@ -57,7 +57,7 @@ export default function UpdateProfile() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8000/api/v1/user/update-user-profile",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/update-user-profile`,
         data,
         {
           headers: {
@@ -65,8 +65,6 @@ export default function UpdateProfile() {
           },
         },
       );
-
-      console.log("new response=", res.data.data);
       alert("User Profile updated successfully");
       setUser(res.data.data);
       navigate("/profile", { replace: true });

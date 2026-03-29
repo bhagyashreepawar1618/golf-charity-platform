@@ -13,7 +13,7 @@ export default function AuthLoader({ children }) {
         if (!token) return;
 
         const res = await axios.get(
-          "http://localhost:8000/api/v1/user/get-current-user",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get-current-user`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -54,7 +54,7 @@ export default function AddCharity() {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:8000/api/v1/admin/set-charity",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/set-charity`,
         data,
         {
           headers: {
@@ -63,9 +63,7 @@ export default function AddCharity() {
         },
       );
 
-      console.log("Charity created:", res.data);
-
-      alert("Charity Added Successfully 💜");
+      alert("Charity Added Successfully ");
       navigate("/admin-profile", { replace: true });
 
       // reset

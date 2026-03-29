@@ -12,7 +12,7 @@ export default function Draw() {
       setLoading(true);
 
       const res = await axios.get(
-        "http://localhost:8000/api/v1/admin/run-draw",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/run-draw`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -20,7 +20,6 @@ export default function Draw() {
         },
       );
 
-      console.log("draw result=", res.data.data);
       setDrawData(res.data.data);
     } catch (err) {
       console.error(err);

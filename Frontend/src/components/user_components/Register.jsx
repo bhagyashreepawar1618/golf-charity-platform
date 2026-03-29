@@ -49,11 +49,9 @@ export default function Register() {
 
       // Only user endpoint
       const res = await axios.post(
-        "http://localhost:8000/api/v1/user/register",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`,
         data,
       );
-
-      console.log(res.data);
 
       alert("User Registered Successfully");
 

@@ -13,15 +13,13 @@ export default function MyScores() {
         const token = localStorage.getItem("UseraccessToken");
 
         const res = await axios.get(
-          "http://localhost:8000/api/v1/user/get-scores",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get-scores`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           },
         );
-
-        console.log("fetched scores=", res.data.data);
         setUserScore(res.data.data);
       } catch (err) {
         console.error(err);
@@ -52,9 +50,7 @@ export default function MyScores() {
 
         {/* No Scores */}
         {(!userscore || userscore.length === 0) && (
-          <p className="text-center text-[#C8A2FF]/60">
-            No scores added yet 😔
-          </p>
+          <p className="text-center text-[#C8A2FF]/60">No scores added yet</p>
         )}
 
         {/* Scores List */}

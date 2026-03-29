@@ -15,15 +15,13 @@ export default function ViewUsers() {
         setLoading(true);
 
         const res = await axios.get(
-          "http://localhost:8000/api/v1/admin/get-all-users",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/get-all-users`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           },
         );
-
-        console.log("users=", res.data.data.users);
         setUsers(res.data.data.users);
       } catch (err) {
         console.error(err);

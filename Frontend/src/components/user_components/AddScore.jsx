@@ -24,7 +24,7 @@ export default function AddScore() {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:8000/api/v1/user/add-score",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/add-score`,
         {
           score: Number(score),
         },
@@ -35,7 +35,6 @@ export default function AddScore() {
         },
       );
 
-      console.log("score added:", res.data.data);
       setUserScore(res.data.data);
 
       alert("Score added successfully ");

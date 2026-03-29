@@ -12,15 +12,13 @@ export default function AdminDashboard() {
 
       try {
         const res = await axios.get(
-          "http://localhost:8000/api/v1/admin/get-all-users",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/get-all-users`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           },
         );
-
-        console.log("Response=", res.data.data);
 
         // IMPORTANT (store in state)
         setUsers(res.data.data.totalUsers);

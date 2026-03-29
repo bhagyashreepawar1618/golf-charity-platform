@@ -36,15 +36,13 @@ export default function Login() {
 
       const endpoint =
         role === "admin"
-          ? "http://localhost:8000/api/v1/admin/login-admin"
-          : "http://localhost:8000/api/v1/user/login";
+          ? `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/login-admin`
+          : `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`;
 
       const res = await axios.post(endpoint, {
         username: formData.username,
         password: formData.password,
       });
-
-      console.log("user is=", res.data.data.user);
 
       // store tokens
       if (role == "user") {

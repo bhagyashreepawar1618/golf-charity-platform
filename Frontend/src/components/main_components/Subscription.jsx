@@ -21,7 +21,7 @@ export default function Subscription() {
           : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
 
       const res = await axios.post(
-        "http://localhost:8000/api/v1/user/set-subscription-details",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/set-subscription-details`,
         {
           status: true,
           plan: plan,
