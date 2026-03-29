@@ -4,6 +4,7 @@ import {
   loginAdmin,
   setCharity,
   getUsersWithCount,
+  runDraw,
 } from '../controllers/admin.controller.js';
 import { upload } from '../middlewares/multer.middleware.js';
 import { verifyJWT } from '../middlewares/adminauth.middleware.js';
@@ -33,4 +34,5 @@ router.route('/set-charity').post(
 );
 
 router.route('/get-all-users').get(verifyJWT, getUsersWithCount);
+router.route('/run-draw').get(verifyJWT, runDraw);
 export default router;
