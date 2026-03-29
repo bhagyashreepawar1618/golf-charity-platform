@@ -67,12 +67,6 @@ export default function Profile() {
             </h3>
             <p className="text-xs text-[#C8A2FF]/60">Scores</p>
           </div>
-
-          <div className="bg-[#2A0A3D] p-4 rounded-xl text-center hover:scale-105 transition">
-            <h3 className="text-xl font-bold text-[#C8A2FF]">12</h3>
-            <p className="text-xs text-[#C8A2FF]/60">Draws Joined</p>
-          </div>
-
           <div className="bg-[#2A0A3D] p-4 rounded-xl text-center hover:scale-105 transition">
             <h3 className="text-xl font-bold text-[#C8A2FF]">₹0</h3>
             <p className="text-xs text-[#C8A2FF]/60">Total Won</p>
