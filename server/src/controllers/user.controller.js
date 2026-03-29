@@ -279,7 +279,7 @@ const addScore = asyncHandler(async (req, res) => {
 });
 
 const getScore = asyncHandler(async (req, res) => {
-  return res.status(200).json(new ApiResponse(200, req.user, 'scores fetched successfully'));
+  return res.status(200).json(new ApiResponse(200, req.user.scores, 'scores fetched successfully'));
 });
 export {
   registerUser,
